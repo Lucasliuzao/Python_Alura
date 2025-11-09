@@ -1,4 +1,4 @@
-name: build
+name: CI Pipeline
 
 on:
   push:
@@ -16,8 +16,8 @@ on:
 
 jobs:
   build:
+    name: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -32,10 +32,25 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Rodar testes
-        run: |
-          echo "Executando testes..."
-          pytest || echo "Nenhum teste encontrado"
-
       - name: Finalizar build
         run: echo "✅ Build executado com sucesso!"
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Rodar testes
+        run: |
+          echo "🧪 Executando testes automatizados..."
+          pytest || echo "Nenhum teste encontrado"
+
+  deploy-uat:
+    name: deploy-uat
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/uat'
+    steps:
+      - name: Simular deploy no ambiente UAT
+        run: |
+          echo "🚀 Deploy no ambiente UAT executado com sucesso!"
