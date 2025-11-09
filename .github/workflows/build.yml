@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Rodar testes
         run: |
-          echo "🧪 Executando testes automatizados..."
+          echo "Executando testes automatizados..."
           pytest || echo "Nenhum teste encontrado"
 
   deploy-uat:
@@ -53,4 +53,13 @@ jobs:
     steps:
       - name: Simular deploy no ambiente UAT
         run: |
-          echo "🚀 Deploy no ambiente UAT executado com sucesso!"
+          echo "Deploy no ambiente UAT executado com sucesso!"
+
+  deploy-hml:
+    name: deploy-hml
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/hml'
+    steps:
+      - name: Simular deploy no ambiente HML
+        run: echo "Deploy no ambiente HML executado com sucesso!"
