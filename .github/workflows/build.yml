@@ -52,8 +52,7 @@ jobs:
     if: github.ref == 'refs/heads/uat'
     steps:
       - name: Simular deploy no ambiente UAT
-        run: |
-          echo "Deploy no ambiente UAT executado com sucesso!"
+        run: echo "Deploy no ambiente UAT executado com sucesso!"
 
   deploy-hml:
     name: deploy-hml
@@ -70,5 +69,5 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/release'
     steps:
-      - name: Simular deploy no ambiente producao
+      - name: Simular deploy no ambiente produção
         run: echo "Deploy no ambiente de produção executado com sucesso!"
